@@ -1,6 +1,6 @@
 {
   "name": "minimap-lens",
-  "main": "./lib/minimap-lens",
+  "main": "./dist/minimap-lens",
   "version": "0.7.0",
   "description": "Show code lens on hovering to Minimap.",
   "keywords": [
@@ -12,7 +12,11 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint '{lib,spec}/**/*.js' --format codeframe",
-    "lint:fix": "prettier-eslint --write '{lib,spec}/**/*.js'"
+    "lint:fix": "prettier-eslint --write '{lib,spec}/**/*.js'",
+    "clean": "shx rm -rf dist",
+    "babel": "npm run clean && shx cp -r lib dist && cross-env BABEL_KEEP_MODULES=false babel dist --out-dir dist",
+    "build": "npm run babel",
+    "prepare": "npm run build"
   },
   "husky": {
     "hooks": {
@@ -38,8 +42,12 @@
   "activationHooks": [
     "core:loaded-shell-environment"
   ],
-  "dependencies": {},
   "devDependencies": {
+    "@babel/cli": "7.10.5",
+    "@babel/core": "7.10.5",
+    "babel-preset-atomic": "^1.0.0",
+    "cross-env": "^7.0.2",
+    "shx": "^0.3.2",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.12.0",
     "eslint-config-prettier": "^3.4.0",
